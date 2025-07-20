@@ -1,0 +1,6 @@
+mutation GetElementList{
+    getElementList {
+        message
+        data
+    }
+}

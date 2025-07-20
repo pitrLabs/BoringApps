@@ -1,0 +1,144 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+scalar GenericScalar
+
+scalar JSONString
+type Query {
+  hello: String
+}
+type Mutation {
+  getElementList: GenericSuccessResult
+  calculateMolarMass(input: MolarMassInput!): GenericSuccessResult
+  calculateStoichiometry(input: StoichiometryInput!): GenericSuccessResult
+  calculatePh(input: PHCalculatorInput!): GenericSuccessResult
+  calculateIdealGasLaw(input: IdealGasLawInput!): GenericSuccessResult
+  calculatePhAccurate(input: PHInput!): GenericSuccessResult
+  calculateVanDerWaals(input: VanDerWaalsInput!): GenericSuccessResult
+  calculateEquilibrium(input: EquilibriumInput!): GenericSuccessResult
+  calculateGibbs(input: GibbsInput!): GenericSuccessResult
+  calculateCellPotential(input: CellPotentialInput!): GenericSuccessResult
+  calculateRateLaw(input: RateLawInput!): GenericSuccessResult
+  calculateHenry(input: HenryLawInput!): GenericSuccessResult
+  calculateTitration(input: TitrationInput!): GenericSuccessResult
+  calculateRaoult(input: RaoultInput!): GenericSuccessResult
+  calculateEntropy(input: EnthalpyInput!): GenericSuccessResult
+  calculateBufferPh(input: BufferInput!): GenericSuccessResult
+  calculateHessLaw(input: HessLawInput!): GenericSuccessResult
+  calculateNernst(input: NernstInput!): GenericSuccessResult
+  calculateFreezingBoiling(input: FreezingBoilingInput!): GenericSuccessResult
+  calculateMoleFraction(input: MoleFractionInput!): GenericSuccessResult
+  calculateHalfLife(input: HalfLifeInput!): GenericSuccessResult
+  calculateHeatCapacity(input: HeatCapacityInput!): GenericSuccessResult
+  calculateGasDiffusion(input: GasDiffusionInput!): GenericSuccessResult
+}
+type GenericSuccessResult {
+  message: String
+  data: GenericScalar
+}
+input MolarMassInput {
+  formula: String
+}
+input StoichiometryInput {
+  reactants: JSONString
+  products: JSONString
+}
+input PHCalculatorInput {
+  concentration: Float
+}
+input IdealGasLawInput {
+  pressure: Float
+  volume: Float
+  temperature: Float
+}
+input PHInput {
+  concentration: Float
+  pka: Float!
+}
+input VanDerWaalsInput {
+  pressure: Float
+  volume: Float
+  moles: Float
+  temperature: Float
+  constA: Float
+  constB: Float
+}
+input EquilibriumInput {
+  products: [[Float]]
+  reactants: [[Float]]
+  temperature: Float
+}
+input GibbsInput {
+  deltaH: Float
+  deltaS: Float
+  temperature: Float
+}
+input CellPotentialInput {
+  eCathode: Float
+  eAnode: Float
+}
+input RateLawInput {
+  rateConstant: Float
+  concentrations: [[Float]]
+}
+input HenryLawInput {
+  henryConstant: Float
+  gasPressure: Float
+}
+input TitrationInput {
+  acidMorality: Float
+  acidVolume: Float
+  baseMolarity: Float
+}
+input RaoultInput {
+  purePressure: Float
+  soluteFraction: Float
+}
+input EnthalpyInput {
+  heat: Float
+  temperature: Float
+}
+input BufferInput {
+  pka: Float
+  acidConcentration: Float
+  baseConcentration: Float
+}
+input HessLawInput {
+  reactants: [Float]
+  products: [Float]
+}
+input NernstInput {
+  eo: Float
+  n: Float
+  q: Float
+}
+input FreezingBoilingInput {
+  kf: Float
+  kb: Float
+  m: Float
+  i: Float
+}
+input MoleFractionInput {
+  na: Float
+  nb: Float
+}
+input HalfLifeInput {
+  k: Float
+}
+input HeatCapacityInput {
+  m: Float
+  c: Float
+  deltaT: Float
+}
+input GasDiffusionInput {
+  m1: Float
+  m2: Float
+  r2: Float
+}
+
+directive @specifiedBy(
+
+    url: String!
+  ) on SCALAR
+
