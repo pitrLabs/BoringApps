@@ -1,6 +1,42 @@
-mutation GetElementList{
-    getElementList {
+query GetElementList {
+    elements {
         message
-        data
+        data {
+            atomicNumber
+            atomicMass
+            atomicRadius
+            covalentRadius
+            vanDerWaalsRadius
+            symbol
+            name
+            category
+            period
+            group
+            block
+            phase
+            density
+            meltingPoint
+            boilingPoint
+            electronConfiguration
+            electronegativity
+            electronAffinity
+            electricalConductivity
+            ionizationEnergy
+            isotopes {
+                symbol
+                mass
+                abundance
+                halfLife
+                decayMode
+            }
+            oxidationState
+            abundanceEarthCrust
+            abundanceUniverse
+            specificHeat
+            appearance
+            crystalStructure
+            discoveryYear
+            discoveryBy
+        }
     }
 }

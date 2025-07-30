@@ -1,0 +1,11 @@
+query calculateHessLaw (
+    $reactants: [Float!]!,
+    $products: [Float!]!,
+) {
+    calculateHessLaw (
+        input: {
+            reactants: $reactants,
+            products: $products
+        }
+    )
+}

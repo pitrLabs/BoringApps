@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class ElementViewModel(
+class ElementViewModel (
     private val elementService: ElementService = ElementService(ApolloClientInstance.client)
 ) : ViewModel() {
 

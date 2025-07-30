@@ -1,0 +1,13 @@
+query calculateFreezingPoint (
+    $m: Float!
+    $i: Float!
+    $kf: Float!
+) {
+    calculateFreezingPoint (
+        input: {
+            m: $m,
+            i: $i,
+            kf: $kf
+        }
+    )
+}

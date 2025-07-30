@@ -1,0 +1,13 @@
+query calculateBoilingPoint (
+    $m: Float!
+    $i: Float!
+    $kb: Float!
+) {
+    calculateBoilingPoint (
+        input: {
+            m: $m,
+            i: $i,
+            kb: $kb
+        }
+    )
+}

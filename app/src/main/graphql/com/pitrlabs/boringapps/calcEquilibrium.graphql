@@ -1,0 +1,13 @@
+query CalculateEquilibrium(
+    $reactants: [ConcentrationInput!]!,
+    $products: [ConcentrationInput!]!,
+    $temperature: Float
+) {
+    calculateEquilibrium(
+        input: {
+            reactants: $reactants,
+            products: $products,
+            temperature: $temperature
+        }
+    )
+}

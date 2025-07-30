@@ -1,0 +1,13 @@
+query calculateBufferPh (
+    $acidConcentration: Float!
+    $pka: Float!
+    $baseConcentration: Float!
+) {
+    calculateBufferPh (
+        input: {
+            acidConcentration: $acidConcentration,
+            pka: $pka,
+            baseConcentration: $baseConcentration
+        }
+    )
+}

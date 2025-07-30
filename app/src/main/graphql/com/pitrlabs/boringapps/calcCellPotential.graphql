@@ -1,0 +1,11 @@
+query calculateCellPotential (
+    $eCathode: Float!
+    $eAnode: Float!
+) {
+    calculateCellPotential (
+        input: {
+            eCathode: $eCathode,
+            eAnode: $eAnode
+        }
+    )
+}

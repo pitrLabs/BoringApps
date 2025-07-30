@@ -1,0 +1,11 @@
+query calculateEnthalpy (
+    $heat: Float!
+    $temperature: Float!
+) {
+    calculateEnthalpy (
+        input: {
+            heat: $heat,
+            temperature: $temperature
+        }
+    )
+}

@@ -2,72 +2,111 @@ schema {
   query: Query
   mutation: Mutation
 }
-scalar GenericScalar
-
-scalar JSONString
+"The `Decimal` scalar type represents a python Decimal."
+scalar Decimal
 type Query {
   hello: String
+  elements: ElementListResponse
+  compounds: CompoundListResponse
+  calculatePh(input: PHInput!): Float
+  calculateGibbs(input: GibbsInput!): Float
+  calculateCellPotential(input: CellPotentialInput!): Float
+  calculateMoleFraction(input: MoleFractionInput!): Float
+  calculateHalfLife(input: HalfLifeInput!): Float
+  calculateEnthalpy(input: EnthalpyInput!): Float
+  calculateHeatCapacity(input: HeatCapacityInput!): Float
+  calculateNernst(input: NernstInput!): Float
+  calculateRaoult(input: RaoultInput!): Float
+  calculateHenry(input: HenryLawInput!): Float
+  calculateBufferPh(input: BufferInput!): Float
+  calculateTitrationPoint(input: TitrationInput!): Float
+  calculateFreezingPoint(input: FreezingBoilingInput!): Float
+  calculateBoilingPoint(input: FreezingBoilingInput!): Float
+  calculateGasDiffusion(input: GasDiffusionInput!): Float
+  calculateVanDerWaals(input: VanDerWaalsInput!): Float
+  calculateRateLaw(input: RateLawInput!): Float
+  calculateHessLaw(input: HessLawInput!): Float
+  calculateEquilibrium(input: EquilibriumInput!): Float
+  calculateStoichiometry(input: StoichiometryInput!): [StoichiometryResultType]
+}
+type ElementListResponse {
+  message: String
+  data: [ElementType]
+}
+type ElementType {
+  atomicNumber: Int
+  atomicMass: Float
+  atomicRadius: Float
+  covalentRadius: Float
+  vanDerWaalsRadius: Float
+  symbol: String
+  name: String
+  category: String
+  period: Int
+  group: Int
+  block: String
+  phase: String
+  density: Float
+  meltingPoint: Float
+  boilingPoint: Float
+  electronConfiguration: String
+  electronegativity: Float
+  electronAffinity: Float
+  electricalConductivity: Float
+  thermalConductivity: Float
+  ionizationEnergy: Float
+  isotopes: [IsotopeType]
+  oxidationState: [Int]
+  abundanceEarthCrust: Float
+  abundanceUniverse: Float
+  specificHeat: Float
+  appearance: String
+  crystalStructure: String
+  discoveryYear: Int
+  discoveryBy: String
+}
+type IsotopeType {
+  symbol: String
+  mass: Float
+  abundance: Float
+  halfLife: String
+  decayMode: String
+}
+type CompoundListResponse {
+  message: String
+  data: [CompoundType]
+}
+type CompoundType {
+  name: String
+  chemicalFormula: String
+  category: String
+  bondType: String
+  properties: String
+  uses: String
+  status: String
+  discoveryDate: String
+  discoveryPeriod: String
+  discoveryBy: String
+  source: String
+}
+type StoichiometryResultType {
+  product: String
+  ratios: [ReactantRatioType]
+}
+type ReactantRatioType {
+  formula: String
+  ratio: Float
 }
 type Mutation {
-  getElementList: GenericSuccessResult
-  calculateMolarMass(input: MolarMassInput!): GenericSuccessResult
-  calculateStoichiometry(input: StoichiometryInput!): GenericSuccessResult
-  calculatePh(input: PHCalculatorInput!): GenericSuccessResult
-  calculateIdealGasLaw(input: IdealGasLawInput!): GenericSuccessResult
-  calculatePhAccurate(input: PHInput!): GenericSuccessResult
-  calculateVanDerWaals(input: VanDerWaalsInput!): GenericSuccessResult
-  calculateEquilibrium(input: EquilibriumInput!): GenericSuccessResult
-  calculateGibbs(input: GibbsInput!): GenericSuccessResult
-  calculateCellPotential(input: CellPotentialInput!): GenericSuccessResult
-  calculateRateLaw(input: RateLawInput!): GenericSuccessResult
-  calculateHenry(input: HenryLawInput!): GenericSuccessResult
-  calculateTitration(input: TitrationInput!): GenericSuccessResult
-  calculateRaoult(input: RaoultInput!): GenericSuccessResult
-  calculateEntropy(input: EnthalpyInput!): GenericSuccessResult
-  calculateBufferPh(input: BufferInput!): GenericSuccessResult
-  calculateHessLaw(input: HessLawInput!): GenericSuccessResult
-  calculateNernst(input: NernstInput!): GenericSuccessResult
-  calculateFreezingBoiling(input: FreezingBoilingInput!): GenericSuccessResult
-  calculateMoleFraction(input: MoleFractionInput!): GenericSuccessResult
-  calculateHalfLife(input: HalfLifeInput!): GenericSuccessResult
-  calculateHeatCapacity(input: HeatCapacityInput!): GenericSuccessResult
-  calculateGasDiffusion(input: GasDiffusionInput!): GenericSuccessResult
+  updateElement(inputs: [ElementUpdateInput]!): UpdateElements
 }
-type GenericSuccessResult {
-  message: String
-  data: GenericScalar
-}
-input MolarMassInput {
-  formula: String
-}
-input StoichiometryInput {
-  reactants: JSONString
-  products: JSONString
-}
-input PHCalculatorInput {
-  concentration: Float
-}
-input IdealGasLawInput {
-  pressure: Float
-  volume: Float
-  temperature: Float
+type UpdateElements {
+  ok: Boolean
+  messages: [String]
 }
 input PHInput {
   concentration: Float
   pka: Float!
-}
-input VanDerWaalsInput {
-  pressure: Float
-  volume: Float
-  moles: Float
-  temperature: Float
-  constA: Float
-  constB: Float
-}
-input EquilibriumInput {
-  products: [[Float]]
-  reactants: [[Float]]
-  temperature: Float
 }
 input GibbsInput {
   deltaH: Float
@@ -78,47 +117,6 @@ input CellPotentialInput {
   eCathode: Float
   eAnode: Float
 }
-input RateLawInput {
-  rateConstant: Float
-  concentrations: [[Float]]
-}
-input HenryLawInput {
-  henryConstant: Float
-  gasPressure: Float
-}
-input TitrationInput {
-  acidMorality: Float
-  acidVolume: Float
-  baseMolarity: Float
-}
-input RaoultInput {
-  purePressure: Float
-  soluteFraction: Float
-}
-input EnthalpyInput {
-  heat: Float
-  temperature: Float
-}
-input BufferInput {
-  pka: Float
-  acidConcentration: Float
-  baseConcentration: Float
-}
-input HessLawInput {
-  reactants: [Float]
-  products: [Float]
-}
-input NernstInput {
-  eo: Float
-  n: Float
-  q: Float
-}
-input FreezingBoilingInput {
-  kf: Float
-  kb: Float
-  m: Float
-  i: Float
-}
 input MoleFractionInput {
   na: Float
   nb: Float
@@ -126,19 +124,124 @@ input MoleFractionInput {
 input HalfLifeInput {
   k: Float
 }
+input EnthalpyInput {
+  heat: Float
+  temperature: Float
+}
 input HeatCapacityInput {
   m: Float
   c: Float
   deltaT: Float
+}
+input NernstInput {
+  eo: Float
+  n: Float
+  q: Float
+}
+input RaoultInput {
+  purePressure: Float
+  soluteFraction: Float
+}
+input HenryLawInput {
+  henryConstant: Float
+  gasPressure: Float
+}
+input BufferInput {
+  pka: Float
+  acidConcentration: Float
+  baseConcentration: Float
+}
+input TitrationInput {
+  acidMorality: Float
+  acidVolume: Float
+  baseMolarity: Float
+}
+input FreezingBoilingInput {
+  kf: Float
+  kb: Float
+  m: Float
+  i: Float
 }
 input GasDiffusionInput {
   m1: Float
   m2: Float
   r2: Float
 }
-
+input VanDerWaalsInput {
+  pressure: Float
+  volume: Float
+  moles: Float
+  temperature: Float
+  constA: Float
+  constB: Float
+}
+input RateLawInput {
+  rateConstant: Float
+  concentrations: [ConcentrationInput]
+}
+input ConcentrationInput {
+  value: Float
+  order: Float
+}
+input HessLawInput {
+  reactants: [Float]
+  products: [Float]
+}
+input EquilibriumInput {
+  products: [ConcentrationInput]
+  reactants: [ConcentrationInput]
+  temperature: Float
+}
+input StoichiometryInput {
+  reactants: [CompoundInput]
+  products: [CompoundInput]
+}
+input CompoundInput {
+  formula: String
+  coefficient: Float
+}
+input ElementUpdateInput {
+  atomicNumber: Int!
+  atomicMass: Decimal
+  atomicRadius: Decimal
+  covalentRadius: Decimal
+  vanDerWaalsRadius: Decimal
+  symbol: String
+  name: String
+  category: String
+  period: Int
+  group: Int
+  block: String
+  phase: String
+  density: Decimal
+  meltingPoint: Decimal
+  boilingPoint: Decimal
+  electronConfiguration: String
+  electronegativity: Decimal
+  electronAffinity: Decimal
+  electricalConductivity: Decimal
+  thermalConductivity: Decimal
+  ionizationEnergy: Decimal
+  oxidationState: [Int]
+  abundanceEarthCrust: Decimal
+  abundanceUniverse: Decimal
+  specificHeat: Decimal
+  appearance: String
+  crystalStructure: String
+  discoveryYear: Int
+  discoveryBy: String
+  isotopes: [IsotopeInput]
+}
+input IsotopeInput {
+  symbol: String!
+  mass: Float
+  abundance: Float
+  halfLife: String
+  decayMode: String
+}
+"Exposes a URL that specifies the behavior of this scalar."
 directive @specifiedBy(
-
+    "The URL that specifies the behavior of this scalar."
     url: String!
   ) on SCALAR
 

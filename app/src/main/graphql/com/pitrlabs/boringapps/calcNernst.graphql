@@ -1,0 +1,13 @@
+query calculateNernst (
+    $n: Float!
+    $eo: Float!
+    $q: Float!
+) {
+    calculateNernst (
+        input: {
+            n: $n,
+            eo: $eo,
+            q: $q
+        }
+    )
+}

@@ -1,0 +1,11 @@
+query CalculateRateLaw(
+    $rateConstant: Float!,
+    $concentrations: [ConcentrationInput!]!
+) {
+    calculateRateLaw(
+        input: {
+            rateConstant: $rateConstant,
+            concentrations: $concentrations
+        }
+    )
+}

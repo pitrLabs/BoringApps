@@ -1,0 +1,18 @@
+query GetCompoundList{
+    compounds {
+        message
+        data {
+            name
+            chemicalFormula
+            category
+            bondType
+            properties
+            uses
+            status
+            discoveryDate
+            discoveryPeriod
+            discoveryBy
+            source
+        }
+    }
+}

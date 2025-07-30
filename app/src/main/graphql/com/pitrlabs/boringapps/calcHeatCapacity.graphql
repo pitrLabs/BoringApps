@@ -1,0 +1,13 @@
+query calculateHeatCapacity (
+    $m: Float!
+    $c: Float!
+    $deltaT: Float!
+) {
+    calculateHeatCapacity (
+        input: {
+            m: $m,
+            c: $c,
+            deltaT: $deltaT
+        }
+    )
+}

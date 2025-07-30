@@ -1,0 +1,13 @@
+query calculateTitrationPoint (
+    $acidVolume: Float!
+    $baseMolarity: Float!
+    $acidMorality: Float!
+) {
+    calculateTitrationPoint (
+        input: {
+            acidVolume: $acidVolume,
+            baseMolarity: $baseMolarity,
+            acidMorality: $acidMorality
+        }
+    )
+}

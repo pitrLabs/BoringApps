@@ -1,0 +1,11 @@
+query calculateHenry (
+    $gasPressure: Float!
+    $henryConstant: Float!
+) {
+    calculateHenry (
+        input: {
+            gasPressure: $gasPressure,
+            henryConstant: $henryConstant
+        }
+    )
+}

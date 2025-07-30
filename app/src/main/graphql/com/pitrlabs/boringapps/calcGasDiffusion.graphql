@@ -1,0 +1,13 @@
+query CalculateGasDiffusion (
+    $m1: Float!,
+    $m2: Float!,
+    $r2: Float!
+) {
+    calculateGasDiffusion (
+        input: {
+            m1: $m1,
+            m2: $m2,
+            r2: $r2
+        }
+    )
+}

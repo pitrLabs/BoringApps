@@ -3,7 +3,8 @@ package com.pitrlabs.boringapps
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.pitrlabs.boringapps.ui.PeriodicTableScreen
+import com.pitrlabs.boringapps.network.ApolloClientInstance
+import com.pitrlabs.boringapps.ui.MainScreen
 import com.pitrlabs.boringapps.ui.theme.BoringAppsTheme
 
 class MainActivity : ComponentActivity() {
@@ -11,7 +12,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BoringAppsTheme {
-                PeriodicTableScreen()
+                MainScreen(ApolloClientInstance.client)
             }
         }
     }

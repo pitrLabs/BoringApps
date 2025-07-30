@@ -14,9 +14,6 @@ apollo {
             endpointUrl.set("https://playground.pitrlabs.com/graphql/")
             schemaFile.set(file("src/main/graphql/schema.graphqls"))
         }
-        customScalarsMapping.set(
-            mapOf("GenericScalar" to "kotlin.String")
-        )
     }
 }
 
@@ -60,7 +57,7 @@ android {
 dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
-
+    implementation("androidx.compose.material3:material3:1.2.1")
     // Apollo GraphQL
     implementation("com.apollographql.apollo3:apollo-runtime:3.8.2")
 
@@ -70,6 +67,9 @@ dependencies {
 
     // Kotlinx Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
+    implementation("androidx.compose.material:material-icons-extended:1.6.1")
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -1,0 +1,11 @@
+query calculateMoleFraction (
+    $na: Float!
+    $nb: Float!
+) {
+    calculateMoleFraction (
+        input: {
+            na: $na,
+            nb: $nb
+        }
+    )
+}

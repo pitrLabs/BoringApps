@@ -1,0 +1,19 @@
+query calculateVanDerWaals (
+    $pressure: Float!
+    $volume: Float!
+    $moles: Float!
+    $temperature: Float!
+    $constA: Float!
+    $constB: Float!
+) {
+    calculateVanDerWaals (
+        input: {
+            pressure: $pressure,
+            volume: $volume,
+            moles: $moles,
+            temperature: $temperature,
+            constA: $constA,
+            constB: $constB
+        }
+    )
+}

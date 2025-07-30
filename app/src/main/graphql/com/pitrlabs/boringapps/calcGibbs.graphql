@@ -1,0 +1,13 @@
+query calculateGibbs (
+    $deltaH: Float!
+    $deltaS: Float!
+    $temperature: Float!
+) {
+    calculateGibbs (
+        input: {
+            deltaH: $deltaH,
+            deltaS: $deltaS,
+            temperature: $temperature
+        }
+    )
+}

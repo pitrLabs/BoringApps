@@ -1,0 +1,11 @@
+query calculateRaoult (
+    $purePressure: Float!
+    $soluteFraction: Float!
+) {
+    calculateRaoult (
+        input: {
+            purePressure: $purePressure,
+            soluteFraction: $soluteFraction
+        }
+    )
+}

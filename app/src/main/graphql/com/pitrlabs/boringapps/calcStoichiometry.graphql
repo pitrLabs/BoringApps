@@ -1,0 +1,13 @@
+query CalculateStoichiometry (
+    $input: StoichiometryInput!
+) {
+    calculateStoichiometry (
+        input: $input
+    ) {
+        product
+        ratios {
+            formula
+            ratio
+        }
+    }
+}

@@ -1,0 +1,12 @@
+query CalculatePh (
+    $pka: Float!,
+    $concentration: Float!
+) {
+    calculatePh (
+        input: {
+            pka: $pka,
+            concentration: $concentration
+        }
+    )
+}
+

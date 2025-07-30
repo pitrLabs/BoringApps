@@ -1,0 +1,9 @@
+query calculateHalfLife (
+    $k: Float!
+) {
+    calculateHalfLife (
+        input: {
+            k: $k
+        }
+    )
+}
