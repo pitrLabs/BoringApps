@@ -37,6 +37,7 @@ import com.pitrlabs.boringapps.ui.chemistry.VanDerWaalsScreen
 import com.pitrlabs.boringapps.ui.screen.ChemicalScreen
 import com.pitrlabs.boringapps.ui.screen.PeriodicTableScreen
 import com.pitrlabs.boringapps.ui.screen.CompoundScreen
+import com.pitrlabs.boringapps.ui.screen.ImageClassificationScreen
 
 @Composable
 fun MainScreen(client: ApolloClient) {
@@ -61,7 +62,7 @@ fun MainScreen(client: ApolloClient) {
                 composable("home") { HomeScreen(navController) }
                 composable("chemical") { ChemicalScreen(navController) }
                 composable("genai") { DummyScreen("GenAI") }
-                composable("vision") { DummyScreen("Image Classification") }
+                composable("vision") { ImageClassificationScreen() }
                 composable("height") { DummyScreen("Height Prediction") }
                 composable("periodic_table") { PeriodicTableScreen() }
                 composable("compound") { CompoundScreen() }
