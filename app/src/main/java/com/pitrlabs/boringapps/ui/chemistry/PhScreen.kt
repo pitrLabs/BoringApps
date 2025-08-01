@@ -11,11 +11,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.rememberScrollState
@@ -25,9 +22,13 @@ import com.pitrlabs.boringapps.CalculatePhQuery
 import com.pitrlabs.boringapps.network.ApolloClientInstance
 import com.pitrlabs.boringapps.ui.screen.isValidDecimal
 import com.pitrlabs.boringapps.ui.screen.isValidPositiveDecimal
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.HazeTint
+import dev.chrisbanes.haze.hazeEffect
 
 @Composable
-fun PhScreen() {
+fun PhScreen(hazeState: HazeState) {
     var pka by remember { mutableStateOf("") }
     var concentration by remember { mutableStateOf("") }
     var result by remember { mutableStateOf<Double?>(null) }
@@ -36,6 +37,14 @@ fun PhScreen() {
     val scope = rememberCoroutineScope()
     val pkaValue = pka.toDoubleOrNull()
     val concentrationValue = concentration.toDoubleOrNull()
+
+    val glassStyle = HazeStyle(
+        backgroundColor = Color.Transparent,
+        tints = listOf(
+            HazeTint(Color.Transparent)
+        ),
+        blurRadius = 10.dp
+    )
 
     Box(
         modifier = Modifier
@@ -48,29 +57,7 @@ fun PhScreen() {
                 .width(320.dp)
                 .wrapContentHeight()
                 .clip(RoundedCornerShape(20.dp))
-                .background(
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            Color.White.copy(alpha = 0.25f),
-                            Color.White.copy(alpha = 0.15f),
-                            Color.White.copy(alpha = 0.10f)
-                        ),
-                        start = Offset(0f, 0f),
-                        end = Offset(400f, 400f)
-                    )
-                )
-                .border(
-                    width = 1.dp,
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            Color.White.copy(alpha = 0.4f),
-                            Color.White.copy(alpha = 0.1f)
-                        ),
-                        start = Offset(0f, 0f),
-                        end = Offset(300f, 300f)
-                    ),
-                    shape = RoundedCornerShape(20.dp)
-                )
+                .hazeEffect(state = hazeState, style = glassStyle)
         ) {
             Box(
                 modifier = Modifier
@@ -144,7 +131,7 @@ fun PhScreen() {
                                 }
                             }
                         },
-                        modifier = Modifier.fillMaxWidth(),
+                        modifier = Modifier.align(Alignment.End),
                         enabled = pka.isNotBlank() && concentration.isNotBlank()
                     ) {
                         Text("Calculate")
@@ -157,7 +144,7 @@ fun PhScreen() {
 
                         result != null -> {
                             Text(
-                                text = "Result: $result",
+                                text = "$result",
                                 style = MaterialTheme.typography.bodyLarge.copy(
                                     fontWeight = FontWeight.Bold,
                                     shadow = Shadow(

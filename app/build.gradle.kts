@@ -71,7 +71,8 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
     implementation("androidx.compose.material:material-icons-extended:1.6.1")
     implementation("androidx.navigation:navigation-compose:2.7.7")
-
+    implementation("dev.chrisbanes.haze:haze:1.6.9")
+    implementation("dev.chrisbanes.haze:haze-materials:1.6.9")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("io.coil-kt:coil-compose:2.5.0")
 

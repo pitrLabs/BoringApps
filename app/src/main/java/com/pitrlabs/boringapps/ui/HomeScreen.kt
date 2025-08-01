@@ -9,13 +9,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.navigation.NavController
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.pitrlabs.boringapps.ui.component.GlassButton
+import dev.chrisbanes.haze.HazeState
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController, hazeState: HazeState) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -27,7 +28,8 @@ fun HomeScreen(navController: NavController) {
             "Chemical" to "chemical",
             "GenAI" to "genai",
             "Height Prediction" to "height",
-            "Image Classification" to "vision"
+            "Image Classification" to "vision",
+            "Sampling" to "sampling"
         )
 
         Row(
@@ -37,6 +39,7 @@ fun HomeScreen(navController: NavController) {
             GlassButton(
                 text = buttons[0].first,
                 onClick = { navController.navigate(buttons[0].second) },
+                hazeState = hazeState,
                 modifier = Modifier
                     .weight(1f)
                     .height(120.dp)
@@ -45,6 +48,7 @@ fun HomeScreen(navController: NavController) {
             GlassButton(
                 text = buttons[1].first,
                 onClick = { navController.navigate(buttons[1].second) },
+                hazeState = hazeState,
                 modifier = Modifier
                     .weight(1f)
                     .height(120.dp)
@@ -59,6 +63,7 @@ fun HomeScreen(navController: NavController) {
             GlassButton(
                 text = buttons[2].first,
                 onClick = { navController.navigate(buttons[2].second) },
+                hazeState = hazeState,
                 modifier = Modifier
                     .weight(1f)
                     .height(120.dp)
@@ -67,6 +72,22 @@ fun HomeScreen(navController: NavController) {
             GlassButton(
                 text = buttons[3].first,
                 onClick = { navController.navigate(buttons[3].second) },
+                hazeState = hazeState,
+                modifier = Modifier
+                    .weight(1f)
+                    .height(120.dp)
+                    .padding(8.dp)
+            )
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            GlassButton(
+                text = buttons[4].first,
+                onClick = { navController.navigate(buttons[4].second) },
+                hazeState = hazeState,
                 modifier = Modifier
                     .weight(1f)
                     .height(120.dp)

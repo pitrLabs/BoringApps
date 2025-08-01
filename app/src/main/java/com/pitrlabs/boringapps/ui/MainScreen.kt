@@ -38,18 +38,21 @@ import com.pitrlabs.boringapps.ui.screen.ChemicalScreen
 import com.pitrlabs.boringapps.ui.screen.PeriodicTableScreen
 import com.pitrlabs.boringapps.ui.screen.CompoundScreen
 import com.pitrlabs.boringapps.ui.screen.ImageClassificationScreen
+import com.pitrlabs.boringapps.ui.component.CreditCardSample
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.hazeSource
 
 @Composable
 fun MainScreen(client: ApolloClient) {
     val navController = rememberNavController()
-
+    val hazeState = remember { HazeState() }
     Scaffold { paddingValues ->
         Box(modifier = Modifier.fillMaxSize()) {
             Image(
                 painter = painterResource(id = R.drawable.background),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize().hazeSource(hazeState)
             )
 
             NavHost(
@@ -59,33 +62,33 @@ fun MainScreen(client: ApolloClient) {
                     .fillMaxSize()
                     .padding(paddingValues)
             ) {
-                composable("home") { HomeScreen(navController) }
-                composable("chemical") { ChemicalScreen(navController) }
+                composable("home") { HomeScreen(navController, hazeState) }
+                composable("chemical") { ChemicalScreen(navController, hazeState) }
                 composable("genai") { DummyScreen("GenAI") }
                 composable("vision") { ImageClassificationScreen() }
-                composable("height") { DummyScreen("Height Prediction") }
-                composable("periodic_table") { PeriodicTableScreen() }
-                composable("compound") { CompoundScreen() }
-                composable("ph") { PhScreen() }
-                composable("gas diffusion") { GasDiffusionScreen() }
-                composable("gibbs") { GibbsScreen() }
-                composable("cell potential") { CellPotentialScreen() }
-                composable("mole fraction") { MoleFractionScreen() }
-                composable("half life") { HalfLifeScreen() }
-                composable("rate law") { RateLawScreen() }
-                composable("enthalpy") { EnthalpyScreen() }
-                composable("heat capacity") { HeatCapacityScreen() }
-                composable("nernst") { NernstScreen() }
-                composable("raoult law") { RaoultLawScreen() }
-                composable("henry law") { HenryLawScreen() }
-                composable("buffer ph") { BufferPhScreen() }
-                composable("titration") { TitrationScreen() }
-                composable("freezing") { FreezingScreen() }
-                composable("boiling") { BoilingScreen() }
-                composable("van der waals") { VanDerWaalsScreen() }
-                composable("equilibrium") { EquilibriumScreen() }
-                composable("hess law") { HessLawScreen() }
-                composable("stoichiometry") { StoichiometryScreen() }
+                composable("sampling") { CreditCardSample(navController, hazeState) }
+                composable("periodic_table") { PeriodicTableScreen(hazeState) }
+                composable("compound") { CompoundScreen(hazeState) }
+                composable("ph") { PhScreen(hazeState) }
+                composable("gas diffusion") { GasDiffusionScreen(hazeState) }
+                composable("gibbs") { GibbsScreen(hazeState) }
+                composable("cell potential") { CellPotentialScreen(hazeState) }
+                composable("mole fraction") { MoleFractionScreen(hazeState) }
+                composable("half life") { HalfLifeScreen(hazeState) }
+                composable("rate law") { RateLawScreen(hazeState) }
+                composable("enthalpy") { EnthalpyScreen(hazeState) }
+                composable("heat capacity") { HeatCapacityScreen(hazeState) }
+                composable("nernst") { NernstScreen(hazeState) }
+                composable("raoult law") { RaoultLawScreen(hazeState) }
+                composable("henry law") { HenryLawScreen(hazeState) }
+                composable("buffer ph") { BufferPhScreen(hazeState) }
+                composable("titration") { TitrationScreen(hazeState) }
+                composable("freezing") { FreezingScreen(hazeState) }
+                composable("boiling") { BoilingScreen(hazeState) }
+                composable("van der waals") { VanDerWaalsScreen(hazeState) }
+                composable("equilibrium") { EquilibriumScreen(hazeState) }
+                composable("hess law") { HessLawScreen(hazeState) }
+                composable("stoichiometry") { StoichiometryScreen(hazeState) }
             }
         }
     }

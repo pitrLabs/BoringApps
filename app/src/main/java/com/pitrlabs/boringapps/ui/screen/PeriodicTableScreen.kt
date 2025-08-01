@@ -15,7 +15,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -28,9 +27,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pitrlabs.boringapps.model.Element
 import com.pitrlabs.boringapps.ui.ElementViewModel
 import com.pitrlabs.boringapps.ui.component.GlassButton
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.HazeTint
+import dev.chrisbanes.haze.hazeEffect
 
 @Composable
-fun PeriodicTableScreen(viewModel: ElementViewModel = viewModel()) {
+fun PeriodicTableScreen( hazeState: HazeState, viewModel: ElementViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsState()
     var selectedElement by remember { mutableStateOf<Element?>(null) }
 
@@ -68,7 +71,7 @@ fun PeriodicTableScreen(viewModel: ElementViewModel = viewModel()) {
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(uiState.elements) { element ->
-                        ElementTile(element = element) {
+                        ElementTile(element = element, hazeState = hazeState) {
                             selectedElement = it
                         }
                     }
@@ -77,6 +80,7 @@ fun PeriodicTableScreen(viewModel: ElementViewModel = viewModel()) {
                 selectedElement?.let { element ->
                     GlassElementDialog(
                         element = element,
+                        hazeState = hazeState,
                         onDismiss = { selectedElement = null }
                     )
                 }
@@ -86,19 +90,28 @@ fun PeriodicTableScreen(viewModel: ElementViewModel = viewModel()) {
 }
 
 @Composable
-fun ElementTile(element: Element, onClick: (Element) -> Unit) {
+fun ElementTile(element: Element, hazeState: HazeState, onClick: (Element) -> Unit) {
     GlassButton(
         text = element.symbol ?: "",
         onClick = { onClick(element) },
-        modifier = Modifier.size(64.dp)
+        modifier = Modifier.size(64.dp),
+        hazeState = hazeState,
     )
 }
 
 @Composable
 fun GlassElementDialog(
+    hazeState: HazeState,
     element: Element,
     onDismiss: () -> Unit
 ) {
+    val dialogGlassStyle = HazeStyle(
+        backgroundColor = Color.Transparent,
+        tint = HazeTint(Color.Transparent),
+        blurRadius = 16.dp,
+        noiseFactor = 0.15f
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -111,35 +124,7 @@ fun GlassElementDialog(
                 .width(320.dp)
                 .wrapContentHeight()
                 .clip(RoundedCornerShape(20.dp))
-                .background(
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            Color.White.copy(alpha = 0.25f),
-                            Color.White.copy(alpha = 0.15f),
-                            Color.White.copy(alpha = 0.10f)
-                        ),
-                        start = Offset(0f, 0f),
-                        end = Offset(400f, 400f)
-                    )
-                )
-                .border(
-                    width = 1.dp,
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            Color.White.copy(alpha = 0.4f),
-                            Color.White.copy(alpha = 0.1f)
-                        ),
-                        start = Offset(0f, 0f),
-                        end = Offset(300f, 300f)
-                    ),
-                    shape = RoundedCornerShape(20.dp)
-                )
-                .shadow(
-                    elevation = 24.dp,
-                    shape = RoundedCornerShape(20.dp),
-                    ambientColor = Color.Black.copy(alpha = 0.3f),
-                    spotColor = Color.Black.copy(alpha = 0.5f)
-                )
+                .hazeEffect(state = hazeState, style = dialogGlassStyle)
                 .clickable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() }
@@ -270,7 +255,7 @@ fun GlassElementDialog(
 
                     ElementInfoRow(
                         label = "Electron Configuration",
-                        value = element.electronConfiguration?.toString() ?: "—"
+                        value = element.electronConfiguration ?: "—"
                     )
 
                     ElementInfoRow(
@@ -351,11 +336,24 @@ fun GlassElementDialog(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                GlassButton(
-                    text = "Close",
-                    onClick = onDismiss,
-                    modifier = Modifier.width(120.dp)
-                )
+                Box(
+                    modifier = Modifier
+                        .width(120.dp)
+                        .background(
+                            brush = Brush.horizontalGradient(
+                                colors = listOf(Color.White, Color(0xFF68E1FD))
+                            ),
+                            shape = RoundedCornerShape(12.dp)
+                        )
+                        .padding(1.dp)
+                ){
+                    GlassButton(
+                        text = "Close",
+                        onClick = onDismiss,
+                        modifier = Modifier.fillMaxWidth(),
+                        hazeState = hazeState,
+                    )
+                }
             }
         }
     }

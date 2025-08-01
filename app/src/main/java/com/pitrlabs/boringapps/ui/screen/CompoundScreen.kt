@@ -29,9 +29,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.pitrlabs.boringapps.model.Compound
 import com.pitrlabs.boringapps.ui.CompoundViewModel
 import com.pitrlabs.boringapps.ui.component.GlassButton
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.HazeTint
+import dev.chrisbanes.haze.hazeEffect
 
 @Composable
-fun CompoundScreen(viewModel: CompoundViewModel = viewModel()) {
+fun CompoundScreen(hazeState: HazeState, viewModel: CompoundViewModel = viewModel()) {
     val uiState by viewModel.uiState.collectAsState()
     var selectedCompound by remember { mutableStateOf<Compound?>(null) }
 
@@ -69,7 +73,7 @@ fun CompoundScreen(viewModel: CompoundViewModel = viewModel()) {
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     items(uiState.compounds) { compound ->
-                        CompoundTitle(compound = compound) {
+                        CompoundTitle(hazeState = hazeState, compound = compound) {
                             selectedCompound = it
                         }
                     }
@@ -77,6 +81,7 @@ fun CompoundScreen(viewModel: CompoundViewModel = viewModel()) {
 
                 selectedCompound?.let { compound ->
                     GlassCompoundDialog(
+                        hazeState = hazeState,
                         compound = compound,
                         onDismiss = { selectedCompound = null }
                     )
@@ -87,12 +92,13 @@ fun CompoundScreen(viewModel: CompoundViewModel = viewModel()) {
 }
 
 @Composable
-fun CompoundTitle(compound: Compound, onClick: (Compound) -> Unit) {
+fun CompoundTitle(hazeState: HazeState, compound: Compound, onClick: (Compound) -> Unit) {
     val formattedFormula = formatChemicalFormulaUnicode(compound.chemicalFormula ?: "")
 
     GlassButton(
         text = formattedFormula,
         onClick = { onClick(compound) },
+        hazeState = hazeState,
         modifier = Modifier.size(64.dp)
     )
 }
@@ -110,9 +116,17 @@ private fun formatChemicalFormulaUnicode(formula: String): String {
 
 @Composable
 fun GlassCompoundDialog(
+    hazeState: HazeState,
     compound: Compound,
     onDismiss: () -> Unit
 ) {
+    val dialogGlassStyle = HazeStyle(
+        backgroundColor = Color.Transparent,
+        tint = HazeTint(Color.Transparent),
+        blurRadius = 16.dp,
+        noiseFactor = 0.15f
+    )
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -125,35 +139,7 @@ fun GlassCompoundDialog(
                 .width(320.dp)
                 .wrapContentHeight()
                 .clip(RoundedCornerShape(20.dp))
-                .background(
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            Color.White.copy(alpha = 0.25f),
-                            Color.White.copy(alpha = 0.15f),
-                            Color.White.copy(alpha = 0.10f)
-                        ),
-                        start = Offset(0f, 0f),
-                        end = Offset(400f, 400f)
-                    )
-                )
-                .border(
-                    width = 1.dp,
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            Color.White.copy(alpha = 0.4f),
-                            Color.White.copy(alpha = 0.1f)
-                        ),
-                        start = Offset(0f, 0f),
-                        end = Offset(300f, 300f)
-                    ),
-                    shape = RoundedCornerShape(20.dp)
-                )
-                .shadow(
-                    elevation = 24.dp,
-                    shape = RoundedCornerShape(20.dp),
-                    ambientColor = Color.Black.copy(alpha = 0.3f),
-                    spotColor = Color.Black.copy(alpha = 0.5f)
-                )
+                .hazeEffect(state = hazeState, style = dialogGlassStyle)
                 .clickable(
                     indication = null,
                     interactionSource = remember { MutableInteractionSource() }
@@ -281,11 +267,24 @@ fun GlassCompoundDialog(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                GlassButton(
-                    text = "Close",
-                    onClick = onDismiss,
-                    modifier = Modifier.width(120.dp)
-                )
+                Box(
+                    modifier = Modifier
+                        .width(120.dp)
+                        .background(
+                            brush = Brush.horizontalGradient(
+                                colors = listOf(Color.White, Color(0xFF68E1FD))
+                            ),
+                            shape = RoundedCornerShape(12.dp)
+                        )
+                        .padding(1.dp)
+                ){
+                    GlassButton(
+                        text = "Close",
+                        onClick = onDismiss,
+                        modifier = Modifier.fillMaxWidth(),
+                        hazeState = hazeState,
+                    )
+                }
             }
         }
     }
