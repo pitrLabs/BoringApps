@@ -25,11 +25,10 @@ fun HomeScreen(navController: NavController, hazeState: HazeState) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val buttons = listOf(
-            "Chemical" to "chemical",
-            "GenAI" to "genai",
-            "Height Prediction" to "height",
-            "Image Classification" to "vision",
-            "Sampling" to "sampling"
+            "Chemistry" to "chemical",
+            "Simple Generative" to "genai",
+            "Simple Human Weight Prediction" to "weight",
+            "Simple Image Classification" to "vision"
         )
 
         Row(
@@ -72,21 +71,6 @@ fun HomeScreen(navController: NavController, hazeState: HazeState) {
             GlassButton(
                 text = buttons[3].first,
                 onClick = { navController.navigate(buttons[3].second) },
-                hazeState = hazeState,
-                modifier = Modifier
-                    .weight(1f)
-                    .height(120.dp)
-                    .padding(8.dp)
-            )
-        }
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            GlassButton(
-                text = buttons[4].first,
-                onClick = { navController.navigate(buttons[4].second) },
                 hazeState = hazeState,
                 modifier = Modifier
                     .weight(1f)

@@ -39,6 +39,7 @@ import com.pitrlabs.boringapps.ui.screen.PeriodicTableScreen
 import com.pitrlabs.boringapps.ui.screen.CompoundScreen
 import com.pitrlabs.boringapps.ui.screen.ImageClassificationScreen
 import com.pitrlabs.boringapps.ui.component.CreditCardSample
+import com.pitrlabs.boringapps.ui.screen.WeightPredictionScreen
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.hazeSource
 
@@ -65,7 +66,8 @@ fun MainScreen(client: ApolloClient) {
                 composable("home") { HomeScreen(navController, hazeState) }
                 composable("chemical") { ChemicalScreen(navController, hazeState) }
                 composable("genai") { DummyScreen("GenAI") }
-                composable("vision") { ImageClassificationScreen() }
+                composable("vision") { ImageClassificationScreen(hazeState) }
+                composable("weight") { WeightPredictionScreen(hazeState) }
                 composable("sampling") { CreditCardSample(navController, hazeState) }
                 composable("periodic_table") { PeriodicTableScreen(hazeState) }
                 composable("compound") { CompoundScreen(hazeState) }

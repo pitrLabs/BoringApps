@@ -3,7 +3,6 @@ package com.pitrlabs.boringapps.ui.screen
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -25,20 +24,31 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.SubcomposeAsyncImage
-import coil.compose.rememberAsyncImagePainter
 import com.pitrlabs.boringapps.ui.ImageClassificationViewModel
+import dev.chrisbanes.haze.HazeState
+import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.HazeTint
+import dev.chrisbanes.haze.hazeEffect
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 
 @Composable
-fun ImageClassificationScreen() {
+fun ImageClassificationScreen(hazeState: HazeState) {
     val viewModel: ImageClassificationViewModel = viewModel()
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
     var selectedImageFile by remember { mutableStateOf<File?>(null) }
+
+    val glassStyle = HazeStyle(
+        backgroundColor = Color.Transparent,
+        tints = listOf(
+            HazeTint(Color.Transparent)
+        ),
+        blurRadius = 10.dp
+    )
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -68,29 +78,7 @@ fun ImageClassificationScreen() {
                 .width(320.dp)
                 .wrapContentHeight()
                 .clip(RoundedCornerShape(20.dp))
-                .background(
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            Color.White.copy(alpha = 0.25f),
-                            Color.White.copy(alpha = 0.15f),
-                            Color.White.copy(alpha = 0.10f)
-                        ),
-                        start = Offset(0f, 0f),
-                        end = Offset(400f, 400f)
-                    )
-                )
-                .border(
-                    width = 1.dp,
-                    brush = Brush.linearGradient(
-                        colors = listOf(
-                            Color.White.copy(alpha = 0.4f),
-                            Color.White.copy(alpha = 0.1f)
-                        ),
-                        start = Offset(0f, 0f),
-                        end = Offset(300f, 300f)
-                    ),
-                    shape = RoundedCornerShape(20.dp)
-                )
+                .hazeEffect(state = hazeState, style = glassStyle)
                 .verticalScroll(rememberScrollState())
         ) {
             selectedImageUri?.let {
@@ -138,8 +126,8 @@ fun ImageClassificationScreen() {
             when {
                 uiState.isLoading -> {
                     Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.Center
+                        modifier = Modifier.fillMaxWidth().padding(bottom = 10.dp),
+                        contentAlignment = Alignment.Center,
                     ) {
                         CircularProgressIndicator(
                             color = MaterialTheme.colorScheme.primary,
